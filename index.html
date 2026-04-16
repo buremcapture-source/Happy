@@ -53,7 +53,6 @@ body {
   100% { transform: translateY(-20vh) rotate(360deg); opacity: 0; }
 }
 
-/* Ornamen Statis Tambahan di Pojok */
 .corner-decor {
   position: fixed;
   font-size: 40px;
@@ -235,7 +234,6 @@ body {
   line-height: 1.1;
 }
 
-/* ===== POP UP MODAL ===== */
 .modal-overlay {
   position: fixed;
   inset: 0;
@@ -286,22 +284,17 @@ body {
 <!-- Audio Element -->
 <audio id="bgMusic" loop>
   <source src="lagu.mp3" type="audio/mpeg">
-  Browser Anda tidak mendukung elemen audio.
 </audio>
 
 <canvas id="canvas-bg"></canvas>
 <div class="bg-mesh"></div>
-
-<!-- CONTAINER UNTUK ELEMEN FLOATING -->
 <div id="floating-container"></div>
 
-<!-- DEKORASI POJOK -->
 <div class="corner-decor top-l">🌸</div>
 <div class="corner-decor top-r">✨</div>
 <div class="corner-decor bot-l">💖</div>
 <div class="corner-decor bot-r">🌸</div>
 
-<!-- MODAL POP UP -->
 <div class="modal-overlay" id="gameModal">
   <div class="modal-content">
     <div style="font-size: 50px; margin-bottom: 15px;">🤭</div>
@@ -311,7 +304,6 @@ body {
   </div>
 </div>
 
-<!-- LOGIN PAGE -->
 <div class="page active" id="pageLogin">
   <div class="login-card">
     <div class="login-title" style="font-family:'Cormorant Garamond',serif; font-size: 24px; font-weight: 600; color: #a0294d; margin-bottom: 1rem;">Akses Pesan Khusus</div>
@@ -321,14 +313,12 @@ body {
   </div>
 </div>
 
-<!-- PAGE GAME TANTANGAN -->
 <div class="page" id="pageChallenge">
   <div class="game-container">
     <h2 style="font-family:'Cormorant Garamond',serif; color:#a0294d; margin-bottom: 15px; font-size: 26px;">Fotonya bagus kan? 😉</h2>
     <div class="birthday-photo-frame">
-      <img src="https://i.ibb.co.com/nq65Xmzv/Blue-and-White-Minimalist-Happy-Birthday-Photo-Your-Story-1080-x-1080-piksel.png" alt="Happy Birthday Queenia 1080x1080">
+      <img src="https://i.ibb.co.com/nq65Xmzv/Blue-and-White-Minimalist-Happy-Birthday-Photo-Your-Story-1080-x-1080-piksel.png" alt="Happy Birthday Queenia">
     </div>
-    
     <div class="btn-group" id="gameArea">
       <button class="btn-next" onclick="goPage(1)">Bagus</button>
       <button class="btn-next" id="btnJelek" onmouseover="moveButton()" onclick="moveButton()">Jelek</button>
@@ -336,7 +326,6 @@ body {
   </div>
 </div>
 
-<!-- PAGE 1: Envelope -->
 <div class="page" id="page1" onclick="openEnvelope()">
   <div style="font-family:'Cormorant Garamond',serif; font-weight:500; letter-spacing:2px; color:#8a2e48; margin-bottom:10px;">UNTUK</div>
   <div class="main-name" style="margin-bottom:30px;">Queenia Yuanti</div>
@@ -349,14 +338,12 @@ body {
   <div style="font-size: 11px; font-weight: 600; color: #a0294d; letter-spacing: 2px;">KETUK UNTUK MEMBUKA</div>
 </div>
 
-<!-- PAGE 2: Main Birthday -->
 <div class="page" id="page2">
   <div class="main-name">Selamat Ulang Tahun<br>Queenia Yuanti</div>
   <p class="poem" style="margin-top: 25px; padding: 0 20px;">"Semoga harimu penuh dengan tawa, hatimu penuh dengan cinta, dan langkahmu selalu diberkahi kebahagiaan."</p>
   <button class="btn-next" style="margin-top: 30px;" onclick="goPage(3)">Baca Pesan →</button>
 </div>
 
-<!-- PAGE 3: Wish Card -->
 <div class="page" id="page3">
   <div style="background: rgba(255,255,255,0.85); padding: 2.5rem 2rem; border-radius: 2rem; border: 1.5px solid rgba(160, 41, 77, 0.25); max-width: 480px; box-shadow: 0 15px 40px rgba(160, 41, 77, 0.1);">
     <p style="font-family: 'Cormorant Garamond', serif; font-size: 19px; line-height: 1.7; color: #4a1d33;">
@@ -368,7 +355,6 @@ body {
   <button class="btn-next" style="margin-top: 20px;" onclick="goPage(4)">Lanjutkan ✨</button>
 </div>
 
-<!-- PAGE 4: Finale -->
 <div class="page" id="page4">
   <div class="main-name" style="font-size: 55px;">Happy Birthday!</div>
   <div style="margin-top: 3rem; display: flex; flex-direction: column; gap: 15px; width: 100%; align-items: center;">
@@ -377,31 +363,25 @@ body {
   </div>
 </div>
 
-<!-- PAGE 6: Virtual Hug -->
 <div class="page" id="page6">
   <div style="background:rgba(255,255,255,0.8); padding: 2.5rem; border-radius: 2.5rem; width: 100%; max-width: 400px; box-shadow: 0 20px 50px rgba(160, 41, 77, 0.1);">
     <h2 id="hugStatus" style="font-family: 'Cormorant Garamond', serif; color: #c2185b; font-size: 28px; margin-bottom: 10px;">Pelukan Hangat</h2>
     <p id="hugSub" style="font-size: 13px; color: #8a2e48; margin-bottom: 20px;">Rasakan kiriman kasih sayang ini.</p>
-    
     <div class="loading-bar-wrap" id="hugLoader"><div class="loading-bar-fill" id="hugProgress"></div></div>
-    
     <div class="hug-gif-wrap" id="hugAnim">
       <img src="https://media.tenor.com/qwPwHfpv0fkAAAAM/puuung-puuung-hug.gif" alt="Virtual Hug Animation">
     </div>
-    
     <button id="sendHugBtn" class="btn-next" style="width: 100%;" onclick="startSendingHug()">Kirim Pelukan</button>
     <button id="backFromHug" class="btn-next" style="display: none; width: 100%; margin-top: 15px; background: #888;" onclick="goPage(4)">Kembali</button>
   </div>
 </div>
 
-<!-- PAGE 5: Gallery -->
 <div class="page" id="page5">
   <h2 style="font-family:'Cormorant Garamond',serif; color:#a0294d; font-size: 32px;">Galeri Kenangan</h2>
   <div style="margin-top: 20px; font-size: 14px; color: #8a2e48;">Segera hadir koleksi momen kita...</div>
-  <button class="btn-next" style="margin-top: 40px;" onclick="location.reload()">↺ Mulai Lagi</button>
+  <button class="btn-next" style="margin-top: 40px;" onclick="handleRefresh()">↺ Mulai Lagi</button>
 </div>
 
-<!-- Navigation Dots -->
 <div class="nav-dots" id="navContainer" style="position:fixed; bottom:20px; left:50%; transform:translateX(-50%); display:none; gap:10px; z-index:10;">
   <div class="nav-dot" id="dot1"></div><div class="nav-dot" id="dot2"></div><div class="nav-dot" id="dot3"></div>
   <div class="nav-dot" id="dot4"></div><div class="nav-dot" id="dot5"></div><div class="nav-dot" id="dot6"></div>
@@ -410,8 +390,52 @@ body {
 <script>
 let clickCount = 0;
 const music = document.getElementById('bgMusic');
+const TARGET_VOLUME = 0.8;
+const FADE_DURATION = 5000; // 5 Detik
 
-/* FUNGSI GENERATE ELEMENT FLOATING */
+function fadeInMusic() {
+  music.volume = 0;
+  music.play().catch(e => console.log("Interaksi diperlukan"));
+  
+  let startTime = Date.now();
+  const fadeTask = setInterval(() => {
+    let elapsed = Date.now() - startTime;
+    let progress = elapsed / FADE_DURATION;
+    
+    if (progress >= 1) {
+      music.volume = TARGET_VOLUME;
+      clearInterval(fadeTask);
+    } else {
+      music.volume = progress * TARGET_VOLUME;
+    }
+  }, 50);
+}
+
+function fadeOutMusic(callback) {
+  let startVol = music.volume;
+  let startTime = Date.now();
+  
+  const fadeTask = setInterval(() => {
+    let elapsed = Date.now() - startTime;
+    let progress = elapsed / FADE_DURATION;
+    
+    if (progress >= 1) {
+      music.volume = 0;
+      music.pause();
+      clearInterval(fadeTask);
+      if(callback) callback();
+    } else {
+      music.volume = startVol * (1 - progress);
+    }
+  }, 50);
+}
+
+function handleRefresh() {
+  fadeOutMusic(() => {
+    location.reload();
+  });
+}
+
 function initFloating() {
   const container = document.getElementById('floating-container');
   const items = ['🌸', '💖', '✨', '🎈', '❤️', '🌸'];
@@ -442,24 +466,17 @@ function moveButton() {
   clickCount++;
   const btn = document.getElementById('btnJelek');
   btn.style.position = 'absolute';
-
   if(clickCount >= 5) {
     document.getElementById('gameModal').style.display = 'flex';
     return;
   }
-  
   const padding = 50;
   const maxX = window.innerWidth - btn.offsetWidth - padding;
   const maxY = window.innerHeight - btn.offsetHeight - padding;
-  
   let randomX = Math.random() * maxX;
   let randomY = Math.random() * maxY;
-
   const rect = document.getElementById('gameArea').getBoundingClientRect();
-  const finalX = randomX - rect.left;
-  const finalY = randomY - rect.top;
-  
-  btn.style.transform = `translate(${finalX}px, ${finalY}px)`;
+  btn.style.transform = `translate(${randomX - rect.left}px, ${randomY - rect.top}px)`;
 }
 
 function closeModal() {
@@ -484,10 +501,7 @@ function goPage(n) {
 }
 
 function openEnvelope() {
-  // Putar musik saat amplop diklik
-  if (music) {
-    music.play().catch(e => console.log("Autoplay dicegah oleh browser. Memerlukan interaksi pengguna."));
-  }
+  fadeInMusic();
   document.getElementById('envWrap').classList.add('open');
   setTimeout(() => goPage(2), 1000);
 }
@@ -496,7 +510,6 @@ function startSendingHug() {
   document.getElementById('sendHugBtn').style.display = 'none';
   document.getElementById('hugLoader').style.display = 'block';
   document.getElementById('hugStatus').innerText = 'Mengirim Pelukan...';
-  
   let width = 0;
   const interval = setInterval(() => {
     if (width >= 100) {
