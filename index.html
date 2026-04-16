@@ -1,0 +1,581 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Happy Birthday Queenia Yuanti</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Jost:wght@200;300;400;500;600&display=swap" rel="stylesheet">
+<style>
+* { margin:0; padding:0; box-sizing:border-box; }
+
+body {
+  background: #fdf6f9;
+  color: #4a1d33;
+  font-family: 'Jost', sans-serif;
+  font-weight: 400;
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+#canvas-bg {
+  position: fixed;
+  top:0; left:0;
+  width:100%; height:100%;
+  z-index: 0;
+  pointer-events: none;
+}
+
+.bg-mesh {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  background:
+    radial-gradient(ellipse 70% 60% at 15% 20%, rgba(255,182,193,0.5) 0%, transparent 60%),
+    radial-gradient(ellipse 60% 70% at 85% 80%, rgba(255,105,135,0.25) 0%, transparent 55%),
+    radial-gradient(ellipse 50% 50% at 50% 50%, rgba(255,220,230,0.4) 0%, transparent 70%);
+}
+
+/* --- ELEMEN FLOATING --- */
+.floating-element {
+  position: fixed;
+  z-index: 1;
+  pointer-events: none;
+  opacity: 0.6;
+  animation: float-up var(--duration) linear infinite;
+  font-size: var(--size);
+}
+
+@keyframes float-up {
+  0% { transform: translateY(110vh) rotate(0deg); opacity: 0; }
+  10% { opacity: 0.6; }
+  90% { opacity: 0.6; }
+  100% { transform: translateY(-20vh) rotate(360deg); opacity: 0; }
+}
+
+.corner-decor {
+  position: fixed;
+  font-size: 40px;
+  z-index: 5;
+  opacity: 0.3;
+  pointer-events: none;
+}
+.top-l { top: 20px; left: 20px; }
+.top-r { top: 20px; right: 20px; }
+.bot-l { bottom: 20px; left: 20px; }
+.bot-r { bottom: 20px; right: 20px; }
+
+.page {
+  position: relative;
+  z-index: 2;
+  min-height: 100vh;
+  display: none;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 1.5rem;
+  text-align: center;
+}
+.page.active { display: flex; }
+
+/* ===== LOGIN PAGE ===== */
+.login-card {
+  background: rgba(255, 255, 255, 0.85);
+  backdrop-filter: blur(15px);
+  padding: 3rem 2rem;
+  border-radius: 2.5rem;
+  box-shadow: 0 15px 45px rgba(160, 41, 77, 0.15);
+  border: 1px solid rgba(160, 41, 77, 0.2);
+  width: 100%;
+  max-width: 380px;
+  animation: scale-up 0.6s ease-out;
+}
+
+@keyframes scale-up {
+  from { transform: scale(0.9); opacity: 0; }
+  to { transform: scale(1); opacity: 1; }
+}
+
+.login-input {
+  width: 100%;
+  padding: 1rem;
+  border-radius: 1rem;
+  border: 1.5px solid rgba(160, 41, 77, 0.2);
+  text-align: center;
+  margin-bottom: 1rem;
+  outline: none;
+  background: rgba(255, 255, 255, 0.5);
+}
+
+.login-btn {
+  width: 100%;
+  padding: 1rem;
+  border-radius: 1rem;
+  border: none;
+  background: linear-gradient(135deg, #ff6b9d, #c2185b);
+  color: white;
+  font-weight: 600;
+  cursor: pointer;
+  letter-spacing: 1px;
+}
+
+/* ===== TANTANGAN PAGE (GAME) ===== */
+.game-container {
+  max-width: 480px;
+  width: 100%;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.birthday-photo-frame {
+  width: 100%;
+  aspect-ratio: 1/1;
+  max-width: 450px;
+  border-radius: 1.5rem;
+  border: 6px solid white;
+  box-shadow: 0 15px 40px rgba(160, 41, 77, 0.2);
+  margin-bottom: 1.5rem;
+  overflow: hidden;
+  background: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.birthday-photo-frame img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain; 
+  display: block;
+}
+
+.btn-group {
+  display: flex;
+  gap: 15px;
+  margin-top: 10px;
+  position: relative;
+  width: 100%;
+  justify-content: center;
+  align-items: center;
+  min-height: 60px;
+}
+
+.btn-next {
+  background: #c2185b;
+  color: #fff;
+  font-weight: 600;
+  padding: 12px 28px;
+  border-radius: 30px;
+  border: none;
+  cursor: pointer;
+  box-shadow: 0 6px 15px rgba(194, 24, 91, 0.3);
+  transition: all 0.2s;
+  z-index: 10;
+  font-size: 15px;
+}
+
+#btnJelek {
+  position: relative; 
+  background: #c2185b;
+  transition: all 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  white-space: nowrap;
+}
+
+/* ===== ENVELOPE ===== */
+.envelope-wrap {
+  position: relative;
+  width: 280px;
+  height: 190px;
+  margin: 0 auto 2rem;
+  cursor: pointer;
+}
+
+.envelope-body {
+  width: 100%; height: 100%;
+  background: linear-gradient(160deg, #fff0f5 0%, #ffd0e2 100%);
+  border-radius: 10px;
+  position: relative;
+  box-shadow: 0 10px 35px rgba(160, 41, 77, 0.2);
+}
+
+.envelope-flap {
+  position: absolute;
+  top: 0; left: 0; width: 0; height: 0;
+  border-left: 140px solid transparent;
+  border-right: 140px solid transparent;
+  border-top: 95px solid #f7b8cc;
+  transform-origin: top center;
+  transition: transform 0.9s cubic-bezier(0.4,0,0.2,1);
+  z-index: 2;
+}
+.envelope-wrap.open .envelope-flap { transform: rotateX(180deg); }
+
+.wax-seal {
+  position: absolute;
+  top: 50%; left: 50%;
+  transform: translate(-50%,-50%);
+  width: 52px; height: 52px;
+  background: radial-gradient(circle at 35% 35%, #ff6b9d, #c2185b);
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 22px;
+  z-index: 3;
+}
+
+/* ===== GENERAL UI ===== */
+.main-name {
+  font-family: 'Cormorant Garamond', serif;
+  font-style: italic;
+  font-weight: 600;
+  font-size: clamp(36px, 8vw, 64px);
+  color: #721c36;
+  line-height: 1.1;
+}
+
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.65);
+  backdrop-filter: blur(4px);
+  z-index: 2000;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+}
+
+.modal-content {
+  background: white;
+  padding: 2.5rem 2rem;
+  border-radius: 2rem;
+  max-width: 320px;
+  text-align: center;
+  animation: scale-up 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.hug-gif-wrap {
+  display: none;
+  width: 100%;
+  border-radius: 1.5rem;
+  overflow: hidden;
+  margin-top: 1.5rem;
+}
+
+.loading-bar-wrap {
+  width: 100%; height: 14px; background: rgba(160, 41, 77, 0.08);
+  border-radius: 20px; margin: 25px 0; overflow: hidden; display: none;
+}
+
+.loading-bar-fill {
+  width: 0%; height: 100%; background: linear-gradient(90deg, #ff8da1, #c2185b);
+  border-radius: 20px; transition: width 0.1s linear;
+}
+
+.nav-dot {
+  width: 8px; height: 8px; border-radius: 50%;
+  background: rgba(160, 41, 77, 0.25); transition: all 0.3s;
+}
+</style>
+</head>
+<body>
+
+<!-- Audio Element -->
+<audio id="bgMusic" loop>
+  <source src="lagu.mp3" type="audio/mpeg">
+</audio>
+
+<canvas id="canvas-bg"></canvas>
+<div class="bg-mesh"></div>
+<div id="floating-container"></div>
+
+<div class="corner-decor top-l">🌸</div>
+<div class="corner-decor top-r">✨</div>
+<div class="corner-decor bot-l">💖</div>
+<div class="corner-decor bot-r">🌸</div>
+
+<div class="modal-overlay" id="gameModal">
+  <div class="modal-content">
+    <div style="font-size: 50px; margin-bottom: 15px;">🤭</div>
+    <h3 style="color: #c2185b; margin-bottom: 10px; font-family: 'Cormorant Garamond', serif; font-size: 24px;">Gak bisa milih!</h3>
+    <p style="font-weight: 500; color: #6d1b32; margin-bottom: 25px; font-size: 14px; line-height: 1.5;">Foto secantik ini masa dibilang jelek? Tekan tombol "Bagus" sekarang!</p>
+    <button class="btn-next" style="width: 100%;" onclick="closeModal()">Oke, Bagus Kok!</button>
+  </div>
+</div>
+
+<div class="page active" id="pageLogin">
+  <div class="login-card">
+    <div class="login-title" style="font-family:'Cormorant Garamond',serif; font-size: 24px; font-weight: 600; color: #a0294d; margin-bottom: 1rem;">Akses Pesan Khusus</div>
+    <input type="password" id="passInput" class="login-input" placeholder="Sandi">
+    <button class="login-btn" onclick="checkPass()">MASUK</button>
+    <p id="errorText" style="color:red; font-size:12px; margin-top:10px; display:none; font-weight: 600;">Sandi salah, coba "queen"!</p>
+  </div>
+</div>
+
+<div class="page" id="pageChallenge">
+  <div class="game-container">
+    <h2 style="font-family:'Cormorant Garamond',serif; color:#a0294d; margin-bottom: 15px; font-size: 26px;">Fotonya bagus kan? 😉</h2>
+    <div class="birthday-photo-frame">
+      <img src="https://i.ibb.co.com/nq65Xmzv/Blue-and-White-Minimalist-Happy-Birthday-Photo-Your-Story-1080-x-1080-piksel.png" alt="Happy Birthday Queenia">
+    </div>
+    <div class="btn-group" id="gameArea">
+      <button class="btn-next" onclick="goPage(1)">Bagus</button>
+      <button class="btn-next" id="btnJelek" onmouseover="moveButton()" onclick="moveButton()">Jelek</button>
+    </div>
+  </div>
+</div>
+
+<div class="page" id="page1" onclick="openEnvelope()">
+  <div style="font-family:'Cormorant Garamond',serif; font-weight:500; letter-spacing:2px; color:#8a2e48; margin-bottom:10px;">UNTUK</div>
+  <div class="main-name" style="margin-bottom:30px;">Queenia Yuanti</div>
+  <div class="envelope-wrap" id="envWrap">
+    <div class="envelope-body">
+      <div class="envelope-flap"></div>
+      <div class="wax-seal">🌸</div>
+    </div>
+  </div>
+  <div style="font-size: 11px; font-weight: 600; color: #a0294d; letter-spacing: 2px;">KETUK UNTUK MEMBUKA</div>
+</div>
+
+<div class="page" id="page2">
+  <div class="main-name">Selamat Ulang Tahun<br>Queenia Yuanti</div>
+  <p class="poem" style="margin-top: 25px; padding: 0 20px;">"Semoga harimu penuh dengan tawa, hatimu penuh dengan cinta, dan langkahmu selalu diberkahi kebahagiaan."</p>
+  <button class="btn-next" style="margin-top: 30px;" onclick="goPage(3)">Baca Pesan →</button>
+</div>
+
+<div class="page" id="page3">
+  <div style="background: rgba(255,255,255,0.85); padding: 2.5rem 2rem; border-radius: 2rem; border: 1.5px solid rgba(160, 41, 77, 0.25); max-width: 480px; box-shadow: 0 15px 40px rgba(160, 41, 77, 0.1);">
+    <p style="font-family: 'Cormorant Garamond', serif; font-size: 19px; line-height: 1.7; color: #4a1d33;">
+      Sayangku <span style="color: #c2185b; font-weight: 600;">Queenia</span>, selamat bertambah usia. <br><br>
+      Terima kasih telah menjadi cahaya yang paling indah yang pernah aku temukan. Semoga tahun ini membawamu pada pencapaian-pencapaian hebat dan kebahagiaan yang tak terhingga.
+    </p>
+    <div style="font-weight: 600; color: #c2185b; font-size: 22px; margin-top: 2rem; font-style: italic;">— Selamanya Milikmu ♥</div>
+  </div>
+  <button class="btn-next" style="margin-top: 20px;" onclick="goPage(4)">Lanjutkan ✨</button>
+</div>
+
+<div class="page" id="page4">
+  <div class="main-name" style="font-size: 55px;">Happy Birthday!</div>
+  <div style="margin-top: 3rem; display: flex; flex-direction: column; gap: 15px; width: 100%; align-items: center;">
+    <button class="btn-next" style="background: linear-gradient(135deg, #ff6b9d, #e91e63); width: 220px;" onclick="goPage(6)">Get Virtual Hug 🤗</button>
+    <button class="btn-next" style="background: linear-gradient(135deg, #c2185b, #a0294d); width: 220px;" onclick="goPage(5)">Buka Galeri Kenangan 📸</button>
+  </div>
+</div>
+
+<div class="page" id="page6">
+  <div style="background:rgba(255,255,255,0.8); padding: 2.5rem; border-radius: 2.5rem; width: 100%; max-width: 400px; box-shadow: 0 20px 50px rgba(160, 41, 77, 0.1);">
+    <h2 id="hugStatus" style="font-family: 'Cormorant Garamond', serif; color: #c2185b; font-size: 28px; margin-bottom: 10px;">Pelukan Hangat</h2>
+    <p id="hugSub" style="font-size: 13px; color: #8a2e48; margin-bottom: 20px;">Rasakan kiriman kasih sayang ini.</p>
+    <div class="loading-bar-wrap" id="hugLoader"><div class="loading-bar-fill" id="hugProgress"></div></div>
+    <div class="hug-gif-wrap" id="hugAnim">
+      <img src="https://media.tenor.com/qwPwHfpv0fkAAAAM/puuung-puuung-hug.gif" alt="Virtual Hug Animation">
+    </div>
+    <button id="sendHugBtn" class="btn-next" style="width: 100%;" onclick="startSendingHug()">Kirim Pelukan</button>
+    <button id="backFromHug" class="btn-next" style="display: none; width: 100%; margin-top: 15px; background: #888;" onclick="goPage(4)">Kembali</button>
+  </div>
+</div>
+
+<div class="page" id="page5">
+  <h2 style="font-family:'Cormorant Garamond',serif; color:#a0294d; font-size: 32px;">Galeri Kenangan</h2>
+  <div style="margin-top: 20px; font-size: 14px; color: #8a2e48;">Segera hadir koleksi momen kita...</div>
+  <button class="btn-next" style="margin-top: 40px;" onclick="handleRefresh()">↺ Mulai Lagi</button>
+</div>
+
+<div class="nav-dots" id="navContainer" style="position:fixed; bottom:20px; left:50%; transform:translateX(-50%); display:none; gap:10px; z-index:10;">
+  <div class="nav-dot" id="dot1"></div><div class="nav-dot" id="dot2"></div><div class="nav-dot" id="dot3"></div>
+  <div class="nav-dot" id="dot4"></div><div class="nav-dot" id="dot5"></div><div class="nav-dot" id="dot6"></div>
+</div>
+
+<script>
+let clickCount = 0;
+const music = document.getElementById('bgMusic');
+const TARGET_VOLUME = 0.8;
+const FADE_DURATION = 5000; // 5 Detik
+
+function fadeInMusic() {
+  music.volume = 0;
+  music.play().catch(e => console.log("Interaksi diperlukan"));
+  
+  let startTime = Date.now();
+  const fadeTask = setInterval(() => {
+    let elapsed = Date.now() - startTime;
+    let progress = elapsed / FADE_DURATION;
+    
+    if (progress >= 1) {
+      music.volume = TARGET_VOLUME;
+      clearInterval(fadeTask);
+    } else {
+      music.volume = progress * TARGET_VOLUME;
+    }
+  }, 50);
+}
+
+function fadeOutMusic(callback) {
+  let startVol = music.volume;
+  let startTime = Date.now();
+  
+  const fadeTask = setInterval(() => {
+    let elapsed = Date.now() - startTime;
+    let progress = elapsed / FADE_DURATION;
+    
+    if (progress >= 1) {
+      music.volume = 0;
+      music.pause();
+      clearInterval(fadeTask);
+      if(callback) callback();
+    } else {
+      music.volume = startVol * (1 - progress);
+    }
+  }, 50);
+}
+
+function handleRefresh() {
+  fadeOutMusic(() => {
+    location.reload();
+  });
+}
+
+function initFloating() {
+  const container = document.getElementById('floating-container');
+  const items = ['🌸', '💖', '✨', '🎈', '❤️', '🌸'];
+  for (let i = 0; i < 25; i++) {
+    const el = document.createElement('div');
+    el.className = 'floating-element';
+    el.innerHTML = items[Math.floor(Math.random() * items.length)];
+    el.style.setProperty('--duration', (Math.random() * 10 + 10) + 's');
+    el.style.setProperty('--size', (Math.random() * 20 + 15) + 'px');
+    el.style.left = (Math.random() * 100) + 'vw';
+    el.style.animationDelay = (Math.random() * 15) + 's';
+    container.appendChild(el);
+  }
+}
+initFloating();
+
+function checkPass() {
+  const pass = document.getElementById('passInput').value.toLowerCase();
+  if(pass === 'queen') {
+    document.getElementById('pageLogin').style.display = 'none';
+    document.getElementById('pageChallenge').classList.add('active');
+  } else {
+    document.getElementById('errorText').style.display = 'block';
+  }
+}
+
+function moveButton() {
+  clickCount++;
+  const btn = document.getElementById('btnJelek');
+  btn.style.position = 'absolute';
+  if(clickCount >= 5) {
+    document.getElementById('gameModal').style.display = 'flex';
+    return;
+  }
+  const padding = 50;
+  const maxX = window.innerWidth - btn.offsetWidth - padding;
+  const maxY = window.innerHeight - btn.offsetHeight - padding;
+  let randomX = Math.random() * maxX;
+  let randomY = Math.random() * maxY;
+  const rect = document.getElementById('gameArea').getBoundingClientRect();
+  btn.style.transform = `translate(${randomX - rect.left}px, ${randomY - rect.top}px)`;
+}
+
+function closeModal() {
+  document.getElementById('gameModal').style.display = 'none';
+}
+
+function goPage(n) {
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  const target = document.getElementById('page' + n);
+  if(target) target.classList.add('active');
+  
+  if(n >= 1) {
+    document.getElementById('navContainer').style.display = 'flex';
+    for(let i=1; i<=6; i++) {
+      const dot = document.getElementById('dot'+i);
+      if(dot) {
+        dot.style.background = (i===n) ? '#c2185b' : 'rgba(160, 41, 77, 0.25)';
+        dot.style.width = (i===n) ? '20px' : '8px';
+      }
+    }
+  }
+}
+
+function openEnvelope() {
+  fadeInMusic();
+  document.getElementById('envWrap').classList.add('open');
+  setTimeout(() => goPage(2), 1000);
+}
+
+function startSendingHug() {
+  document.getElementById('sendHugBtn').style.display = 'none';
+  document.getElementById('hugLoader').style.display = 'block';
+  document.getElementById('hugStatus').innerText = 'Mengirim Pelukan...';
+  let width = 0;
+  const interval = setInterval(() => {
+    if (width >= 100) {
+      clearInterval(interval);
+      document.getElementById('hugLoader').style.display = 'none';
+      document.getElementById('hugAnim').style.display = 'block';
+      document.getElementById('hugStatus').innerText = 'Diterima! 🤗';
+      document.getElementById('backFromHug').style.display = 'block';
+      launchConfetti();
+    } else {
+      width += 2;
+      document.getElementById('hugProgress').style.width = width + '%';
+    }
+  }, 40);
+}
+
+const canvas = document.getElementById('canvas-bg');
+const ctx = canvas.getContext('2d');
+let orbs = [], W, H;
+function resize() { W = canvas.width = window.innerWidth; H = canvas.height = window.innerHeight; }
+function initOrbs() {
+  orbs = [];
+  for (let i = 0; i < 10; i++) {
+    orbs.push({
+      x: Math.random() * W, y: Math.random() * H,
+      r: Math.random() * 150 + 50,
+      color: `rgba(255, ${180 + Math.random()*50}, ${200 + Math.random()*50}, 0.12)`,
+      vx: (Math.random() - 0.5) * 0.3, vy: (Math.random() - 0.5) * 0.3
+    });
+  }
+}
+function draw() {
+  ctx.clearRect(0,0,W,H);
+  orbs.forEach(o => {
+    o.x += o.vx; o.y += o.vy;
+    if(o.x < -o.r) o.x = W+o.r; if(o.x > W+o.r) o.x = -o.r;
+    if(o.y < -o.r) o.y = H+o.r; if(o.y > H+o.r) o.y = -o.r;
+    const g = ctx.createRadialGradient(o.x, o.y, 0, o.x, o.y, o.r);
+    g.addColorStop(0, o.color); g.addColorStop(1, 'transparent');
+    ctx.beginPath(); ctx.arc(o.x, o.y, o.r, 0, Math.PI*2);
+    ctx.fillStyle = g; ctx.fill();
+  });
+  requestAnimationFrame(draw);
+}
+resize(); initOrbs(); draw();
+window.addEventListener('resize', resize);
+
+function launchConfetti() {
+  for (let i = 0; i < 70; i++) {
+    const c = document.createElement('div');
+    c.style.cssText = `
+      position:fixed; z-index:100; top:-10px;
+      left:${Math.random()*100}vw;
+      width:${Math.random()*8+4}px; height:${Math.random()*8+4}px;
+      background:hsl(${Math.random()*360}, 70%, 75%);
+      border-radius:${Math.random()>0.5?'50%':'2px'};
+      animation: fall ${Math.random()*2+2}s linear forwards;
+    `;
+    document.body.appendChild(c);
+    setTimeout(() => c.remove(), 4000);
+  }
+}
+</script>
+
+<style>
+@keyframes fall { to { transform: translateY(110vh) rotate(720deg); opacity: 0; } }
+</style>
+</body>
+</html>
